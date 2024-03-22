@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from './components/header/Header';
+import './styles/styles.css';
+import NewsList from './components/NewsList';
+import { newsData } from './utils/data';
+import { useState } from 'react';
 
-function App() {
+// import StatePlayground from './components/playground/StatePlayground';
+
+const App = () => {
+  let [news, setNews] = useState(newsData);
+
+  const getKeywords = (event) => {
+    let keywords = event.target.value;
+    let filtered = newsData.filter((item) => {
+      return item.title.indexOf(keywords) > -1;
+    });
+
+    setNews(filtered);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <h1 className='App-header'>
+        <Header getKeywords={getKeywords} />
+
+        <div className='container'>
+          {/* <StatePlayground /> */}
+          <NewsList news={news}>
+            <br />
+            <h1>I am a child element</h1>
+          </NewsList>
+        </div>
+      </h1>
     </div>
   );
-}
+};
 
 export default App;
